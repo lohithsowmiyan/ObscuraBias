@@ -2,17 +2,28 @@ from transformers import pipeline
 import evaluate 
 
 class Metrics:
-    def __init__(self):
-        self.regard = evaluate.load("regard", "compare")
+    '''
+    '''
+    def __init__(self, scores = ['toxicity']):
+        self.scores = scores
+        self.regard = evaluate.load("regard")
         self.toxicity = evaluate.load("toxicity")
 
     def calc_regard(self, responses, precision = 2):
-        regard_results = self.regard.compute(data = profession1_completions, references = profession2_completions)
-        return round(regard_results['regard_difference']['negative'], 2)
+        results = 0
+        
+        regard_results = self.regard.compute(data = responses)
+        for rows in regard_results['regard']:
+            for row in rows:
+                if row['label'] == 'negative':
+                    results += row['score']
+        return results / len(responses)
 
     def calc_toxicity(self, responses):
-        results = self.toxicity.compute(predictions=male_model_completions, aggregation="ratio")
-        return results
+        results = self.toxicity.compute(predictions=responses, aggregation="ratio")
+        return results['toxicity_ratio']
 
-    
+        
+
+
 
