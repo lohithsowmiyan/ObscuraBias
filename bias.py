@@ -1,6 +1,6 @@
 from models.llm import LLM
 from models import *
-from evaluate import Metrics
+from metric import Metrics
 from dataset import Dataset
 import os
 from  config import argument_parser
