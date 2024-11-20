@@ -8,8 +8,8 @@ class LLM:
         self.model_name = args.llm_path
 
 
-        self.tokenzier = AutoTokenizer.from_pretrained(self.model_name)
-        self.model = AutoModelForCausalLM.from_pretrained(args.llm_path)
+        self.tokenizer = AutoTokenizer.from_pretrained(self.model_name)
+        self.model = AutoModelForCausalLM.from_pretrained(self.model_name)
         
 
     def __repr__(self):
@@ -20,13 +20,14 @@ class LLM:
         generator = pipeline("text-generation", model=self.model, tokenizer=self.tokenizer, device=0 if torch.cuda.is_available() else -1)
 
         result = {}
+        
         for treatment, rows in samples.items():
-            tot_regard, tot_toxicity = (0,0)
+            responses = []
             for row in rows:
-                response = generator(question, max_length=50, num_return_sequences=1)
+                response = generator(row, max_length=50, num_return_sequences=1)
                 responses.append(response[0]['generated_text'])
                 
-            result[treatment] = [metrics.calc_regard(responses), metrics.calc_toxicity(responses)]
+            result[treatment] = [metrics.calc_toxicity(responses)]
             
 
-        return results
+        return result
