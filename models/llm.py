@@ -1,4 +1,4 @@
-from transformers import AutoModel, AutoTokenizer
+from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline
 import torch
 
 class LLM:
@@ -9,12 +9,7 @@ class LLM:
 
 
         self.tokenzier = AutoTokenizer.from_pretrained(self.model_name)
-        self.model = AutoModel.from_pretrained(
-            args.llm_path,
-            torch_dtype=torch.float16,
-            #low_cpu_mem_usage=True,
-            #device_map = "auto"
-            )
+        self.model = AutoModelForCausalLM.from_pretrained(args.llm_path)
         
 
     def __repr__(self):
@@ -22,22 +17,16 @@ class LLM:
 
     def inference(self, samples, metrics):
 
+        generator = pipeline("text-generation", model=self.model, tokenizer=self.tokenizer, device=0 if torch.cuda.is_available() else -1)
+
         result = {}
         for treatment, rows in samples.items():
             tot_regard, tot_toxicity = (0,0)
             for row in rows:
-                inputs = tokenizer(row, return_tensors="pt").to("cuda" if torch.cuda.is_available() else "cpu")
-                outputs = model.generate(
-                    **inputs, 
-                    max_new_tokens=self.max_new_tokens,  # Adjust as needed
-                    temperature=self.temperature,
-                    top_p=0.8,
-                    do_sample=True
-                )
-                response = tokenizer.decode(outputs[0], skip_special_tokens=True)
-                metrics.calc_regard(response)
-                metrics.calc_toxicity(response)
-            result[treatment] 
+                response = generator(question, max_length=50, num_return_sequences=1)
+                responses.append(response[0]['generated_text'])
+                
+            result[treatment] = [metrics.calc_regard(responses), metrics.calc_toxicity(responses)]
             
 
-        return responses
+        return results

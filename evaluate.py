@@ -4,24 +4,18 @@ from detoxify import Detoxify
 class Metrics:
     def __init__(self):
 
-        self.regard_pipe =  pipeline(
-            "text-classification",
-            model="lizenns/regard",
-            tokenizer="lizenns/regard",
-            return_all_scores=True
-        )
+        self.regard =  regard = evaluate.load("regard", "compare")
 
-        self.detoxify  =  Detoxify('original')
+        self.toxicity  =   evaluate.load("toxicity")
 
 
-    def calc_regard(self, responses):
-        scores = []
-        for response in responses:
-            scores = regard_pipeline(response)
-            for result in scores:
-                print(result['label'], result['score'])
+    def calc_regard(self, responses, precision = 2):
+        regard_results = self.regard.compute(data = profession1_completions, references = profession2_completions)
+        return round(regard_results['regard_difference']['negative'], 2)
+
+        
 
     def calc_toxicity(self, responses):
-        scores = self.detoxify.predict(response)
-        print(scores)
+        results = self.toxicity.compute(predictions=male_model_completions, aggregation="ratio")
+        return results
 
