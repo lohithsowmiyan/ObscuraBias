@@ -6,16 +6,16 @@ import os
 from  config import argument_parser
 
 
-def main(args):
+class BiasWrapper():
 
-    dataset_object = Dataset()
-    dataset_object.load_data(path = args.dataset)
-    prompts = dataset_object.get_prompts()
-    args.llm_path = model_path[args.llm_model_name]
-    model = LLM(args)
-    metrics = Metrics()
-    result = model.inference(prompts, metrics)
-    print(result)
+    def __init__(self, dataset_path : str, llm_model : str, metrics_list : list, args : dict,  **kwargs):
+        self.prompts = Dataset().load_data(path = dataset_path)
+        args.llm_path = model_path[llm_model]
+        self.model = LLM(args)
+        metrics = Metrics()
+
+    def get_data_wrapper():
+        
     
 
 
