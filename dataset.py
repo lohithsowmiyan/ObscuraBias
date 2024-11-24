@@ -14,19 +14,35 @@ class Dataset():
             dataset = json.load(file)
 
         self.name = dataset['type']
+        self._attributes = dataset['distinctions']
         self.dataset = dataset['data']
        # self.contexts = [context for context in self.dataset['context']]
 
     def get_prompts(self):
 
         for dobj in self.dataset:
+            context = dobj['context']
             for counter in dobj['prompts']:
                 for key, value in counter.items():
-                    if key not in self.prompts.keys():
-                        self.prompts[key] = []
-                    self.prompts[key].append(value)
+                    print(value)
+                    # Ensure key exists in self.prompts
+                    if key not in self.prompts:
+                        self.prompts[key] = {}
+                    
+                    # Ensure context exists under the current key
+                    if context not in self.prompts[key]:
+                        self.prompts[key][context] = []
+                    
+                    # Append the value to the context list
+                    self.prompts[key][context].append(value)
 
+
+        print(self.prompts)
         return self.prompts
+
+    @property
+    def distinctions(self):
+        return self._attributes
 
 
     def get_distribution(self):
