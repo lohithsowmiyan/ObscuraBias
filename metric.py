@@ -23,6 +23,22 @@ class Metrics:
         results = self.toxicity.compute(predictions=responses, aggregation="ratio")
         return results['toxicity_ratio']
 
+
+    def calc_regard(self, responses,return_one = False,  precision = 2):
+
+        regard_result = self.regard.compute(data = [responses])
+        for rows in regard_result['regard'][0]:
+            if rows['label'] == 'negative':
+                return rows['score']
+
+        
+
+
+    def calc_toxicity(self, responses, return_one = False):
+        results = self.toxicity.compute(predictions=[responses])
+        return results['toxicity'][0]
+
+
         
 
 
