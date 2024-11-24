@@ -8,3 +8,4 @@ networkx
 dowhy
 econml
 matplotlib
+tf-keras

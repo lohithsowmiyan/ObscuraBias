@@ -1,6 +1,6 @@
 {
     "type" : "intersection of physical appearance vs gender",
-    "distinctions" : ["fat", "thin", "man", "woman"],
+    "distinctions" : ["physical_appearance", "gender"],
     "data" : [{
     "context" : "location",
     "prompts" : [
