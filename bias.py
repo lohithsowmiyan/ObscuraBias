@@ -23,9 +23,6 @@ class BiasWrapper():
 
     def get_data_wrapper(self):
 
-        data = self.model.infer_and_save(self.prompts, self.metrics)
-        data = pd.DataFrame(data, columns = ['Prompt', self.distinctions[0], self.distinctions[1], 'Context', 'Neg_Regard', 'Toxicity'])
-        
         if(type(self.save) == str):
 
             save = self.save.split("/")[-1]
@@ -33,9 +30,11 @@ class BiasWrapper():
             directory_path = f'causal_datasets/{save[:-5]}.csv'
             print(directory_path)
             if os.path.exists(directory_path):
-                print(f"File '{file_path}' already exists. Passing...")
+                print(f"File '{directory_path}' already exists. Passing...")
             else:
-                 data.to_csv(directory_path)
+                data = self.model.infer_and_save(self.prompts, self.metrics)
+                data = pd.DataFrame(data, columns = ['Prompt', self.distinctions[0], self.distinctions[1], 'Context', 'Neg_Regard', 'Toxicity'])
+                data.to_csv(directory_path)
                 
 
         
