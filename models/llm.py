@@ -31,3 +31,21 @@ class LLM:
             
 
         return result
+
+    def infer_and_save(self, samples, metrics):
+
+        generator = pipeline("text-generation", model=self.model, tokenizer=self.tokenizer, device=0 if torch.cuda.is_available() else -1)
+
+        data = []
+
+        for treatment, contexts in samples.items():
+            treatment_1 , treatment_2 = treatment.split("_")
+            for context, rows in contexts.items():
+                responses = []
+                for row in rows:
+                    response = generator(row, max_length = 50, num_return_sequences = 1)
+                    data.append([row, treatment_1, treatment_2, context, metrics.calc_regard(response[0]['generated_text'], return_one = True), metrics.calc_toxicity(response[0]['generated_text'], return_one = True)])
+
+        return data
+                
+

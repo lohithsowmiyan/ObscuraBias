@@ -2,3 +2,11 @@ transformers
 torch
 detoxify
 evaluate
+pandas
+numpy
+networkx
+dowhy
+econml
+matplotlib
+tf-keras
+seaborn
