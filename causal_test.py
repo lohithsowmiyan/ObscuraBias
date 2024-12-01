@@ -5,7 +5,12 @@ from dowhy import CausalModel
 from econml.dml import LinearDML
 from sklearn.preprocessing import LabelEncoder
 from  config import argument_parser
+import sys
 
+
+def btw(*args, **kwargs) -> None:
+  "Print to standard error, flush standard error, do not print newlines."
+  print(*args, file=sys.stderr, end="", flush=True, **kwargs)
 
 class Causal_Test:
     def __init__(self, causal_dataset = ''):
@@ -41,7 +46,6 @@ class Causal_Test:
         for treatment in self.treatments:
             self.data[treatment] = label_encoder.fit_transform(self.data[treatment])
 
-        print(self.data.head(30))
 
 
     def run_tests(self):
@@ -52,11 +56,11 @@ class Causal_Test:
         else False
         )
 
-        print(list(self.treatments))
+
 
         for outcome in self.outcomes:
             for treatment in list(self.treatments):
-                print(f"Analyzing causal effect of {treatment} on {outcome}",flush= True)
+                btw(f"Analyzing causal effect of {treatment} on {outcome}")
                 
                 # Create a causal model
                 model = CausalModel(
@@ -68,14 +72,14 @@ class Causal_Test:
                 
                 # Identify causal effects
                 identified_estimand = model.identify_effect()
-                print(f"Identified Estimand for {treatment} -> {outcome}:", identified_estimand, flush = True)
+                btw(f"Identified Estimand for {treatment} -> {outcome}:", identified_estimand)
 
                 # Estimate the causal effect
                 estimate = model.estimate_effect(
                     identified_estimand,
                     method_name="backdoor.propensity_score_matching"
                 )
-                print(f"Estimated causal effect of {treatment} on {outcome}: {estimate.value}", flush= True)
+                btw(f"Estimated causal effect of {treatment} on {outcome}: {estimate.value}")
                 
                 # Refute the estimate
                 refutation = model.refute_estimate(
@@ -84,7 +88,7 @@ class Causal_Test:
                     method_name="placebo_treatment_refuter",
                     placebo_type = "permute"
                 )
-                print("Refutation Result:", refutation, flush= True)
+                btw("Refutation Result:", refutation)
 
                 res = check_threshold(estimate.value, refutation.new_effect, 50)
                 if res == True: return False

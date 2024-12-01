@@ -1,0 +1,12 @@
+Processing causal_datasets/economic_gender.csv
+Dataset : causal_datasets/economic_gender.csv | Result : False
+===================
+Processing causal_datasets/economic_race.csv
+Dataset : causal_datasets/economic_race.csv | Result : True
+===================
+Processing causal_datasets/physical_gender.csv
+Dataset : causal_datasets/physical_gender.csv | Result : True
+===================
+Processing causal_datasets/physical_queerness.csv
+Dataset : causal_datasets/physical_queerness.csv | Result : False
+===================
