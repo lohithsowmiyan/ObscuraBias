@@ -1,6 +1,6 @@
 
 # **ObscuraBias: causal evaluation of llm generated content for overlooked demographics**  
-_A catchy one-liner that describes your project._
+Are the current bias evaluation methods FAIR????
 
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)  
 [![Contributors](https://img.shields.io/github/contributors/your-repo.svg)](https://github.com/your-username/your-repo/graphs/contributors)  
@@ -14,8 +14,8 @@ Addressing fairness in evaluation metrics prevents reinforcing biases, ensures e
 ---
 
 ## **Features**  
-- 🚀 **Datasets**: Brief explanation.  
-- 🔍 **Evaluation Metric**: Brief explanation.  
+- 🚀 **Datasets**: ObscuraBias datasets boasts 4 intersectional biases spanning over 15 different demographies which are often overlooked like 'economic_status' and 'gender', 'physical appearance' and 'gender' with an additional context dimension to get more understanding on the prompts. 
+- 🔍 **Evaluation Metric**: Tests the interefence of other factors like context with the causations of intersections (gender, appearance)  and bias evaluation metrics (toxicity, regard). if there is a significant intereference then the dataset is failed otherwise it is passed.  
 
 
 ---
@@ -56,6 +56,10 @@ python bias.py --dataset datasets/economic_gender.json --llm_model gpt-neo --tem
 python causal_test.py --causal_dataset causal_datasets/economic_gender.csv
 ```
 
+### **Experiment***
+```bash
+make -b demo
+```
 
 ---
 
