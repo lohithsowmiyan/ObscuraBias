@@ -1,5 +1,5 @@
 
-# **Project Title**  
+# **ObscuraBias: causal evaluation of llm generated content for overlooked demographics**  
 _A catchy one-liner that describes your project._
 
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)  
@@ -33,10 +33,10 @@ pip install -r requirements.txt
 Step-by-step guide to set up the project.  
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/your-repo.git  
+git clone https://github.com/lohithsowmiyan/ObscuraBias.git  
 
 # Navigate to the project directory
-cd your-repo  
+cd ObscuraBias  
 
 # Install dependencies
 pip install -r requirements.txt
@@ -45,12 +45,18 @@ pip install -r requirements.txt
 ---
 
 ## **Usage**  
-Explain how to use your project with examples or commands.  
+
+### **LLM inference**
+
 ```bash
-python main.py --option argument
+python bias.py --dataset datasets/economic_gender.json
 ```
 
-_For detailed instructions, see the [Documentation](link-to-docs)._  
+### **Causal Tests**
+```bash
+python causal_test.py --causal_dataset causal_datasets/economic_gender.csv
+```
+
 
 ---
 
