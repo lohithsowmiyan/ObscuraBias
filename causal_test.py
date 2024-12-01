@@ -38,28 +38,28 @@ class Causal_Test:
         else False
         )
 
-        for outcome in outcomes:
-            for treatment in treatments:
-                print(f"Analyzing causal effect of {treatment} on {outcome}")
+        for outcome in self.outcomes:
+            for treatment in self.treatments:
+                print(f"Analyzing causal effect of {treatment} on {outcome}",flush= True)
                 
                 # Create a causal model
                 model = CausalModel(
-                    data=data,
-                    treatment=treatment,
-                    outcome=outcome,
-                    common_causes=confounders
+                    data=self.data,
+                    treatment=self.treatment,
+                    outcome=self.outcome,
+                    common_causes=self.confounders
                 )
                 
                 # Identify causal effects
                 identified_estimand = model.identify_effect()
-                print(f"Identified Estimand for {treatment} -> {outcome}:", identified_estimand)
+                print(f"Identified Estimand for {treatment} -> {outcome}:", identified_estimand, flush = True)
 
                 # Estimate the causal effect
                 estimate = model.estimate_effect(
                     identified_estimand,
                     method_name="backdoor.propensity_score_matching"
                 )
-                print(f"Estimated causal effect of {treatment} on {outcome}: {estimate.value}")
+                print(f"Estimated causal effect of {treatment} on {outcome}: {estimate.value}", flush= True)
                 
                 # Refute the estimate
                 refutation = model.refute_estimate(
@@ -68,7 +68,7 @@ class Causal_Test:
                     method_name="placebo_treatment_refuter",
                     placebo_type = "permute"
                 )
-                print("Refutation Result:", refutation)
+                print("Refutation Result:", refutation, flush= True)
 
                 res = check_threshold(estimate, refutation, 50)
                 if res == True: return False
@@ -79,7 +79,7 @@ class Causal_Test:
 if __name__ == "__main__":
         args = argument_parser()
         causal_test = Causal_Test(causal_dataset= args.causal_dataset)
-        print(causal_test.run_tests())
+        print(f"Dataset : {args.causal_dataset} | Result : {causal_test.run_tests()}")
 
         
 
