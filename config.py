@@ -14,6 +14,7 @@ def argument_parser():
 
     parser.add_argument("--dataset", type =str, default = './datasets/physical_gender.json')
 
+    parser.add_argument("--causal_dataset", type=str, default='./causal_datasets/physical_queerness.csv')
 
     args = parser.parse_args()
     return args

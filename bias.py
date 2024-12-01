@@ -1,7 +1,7 @@
 from models.llm import LLM
-from models import *
-from metric import Metrics
-from dataset import Dataset
+from src.models import *
+from src.metric import Metrics
+from src.dataset import Dataset
 import os
 from  config import argument_parser
 import pandas as pd
@@ -41,7 +41,7 @@ class BiasWrapper():
         Parameters: None
 
         Returns: (bool) True if data saved successfully otherwise False if a Exeption occurs
-        
+
         """
         
         try:
@@ -64,16 +64,6 @@ class BiasWrapper():
 
         finally:
             return True
-                
-
-        
-        
-    
-
-
-
-
-
 
 if __name__ == "__main__":
 
