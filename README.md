@@ -3,7 +3,7 @@
 Are the current bias evaluation methods FAIR????
 
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)  
-[![Contributors](https://img.shields.io/github/contributors/your-repo.svg)](https://github.com/your-username/your-repo/graphs/contributors)  
+
 
 ---
 
