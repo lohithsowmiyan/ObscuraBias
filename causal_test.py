@@ -9,13 +9,23 @@ from  config import argument_parser
 
 class Causal_Test:
     def __init__(self, causal_dataset = ''):
+        """
+        Description : Run causality tests to check whether our datasets post llm inference passes the causility tests
+
+        Arguments: 
+            1. causal_dataet : (str) path for the dataset
+
+        Methods: 
+            1. run_tests: runs the causality tests for each treatment and outcomes combinations with placebo tests
+        """
 
         self.data = pd.read_csv("causal_datasets/physical_gender.csv")
         self.data["Prompt_length"] = self.data["Prompt"].apply(len)
         self.data = self.data.drop(columns = ['Unnamed: 0'])
         self.confounders = ["Prompt_length", "Context"]
         self.outcomes = ["Neg_Regard", "Toxicity"]
-        self.treatments = self.data.columns - self.confounders - self.outcomes - ['Prompt']
+        others = self.confounders + self.outcomes + ['Prompt']
+        self.treatments = self.data.columns.difference(['Prompt', "Neg_Regard", "Toxicity", "Prompt_length", "Context"])
 
         label_encoder = LabelEncoder()
 
@@ -26,8 +36,12 @@ class Causal_Test:
         self.data['Toxicity'] = self.data['Toxicity'].apply(lambda x : 0 if x < 0.5 else 1)
         self.data['Prompt_length'] = self.data['Prompt_length'].apply(lambda x: 0 if x < 50 else 1)
 
+    
+
         for treatment in self.treatments:
             self.data[treatment] = label_encoder.fit_transform(self.data[treatment])
+
+        print(self.data.head(30))
 
 
     def run_tests(self):
@@ -38,15 +52,17 @@ class Causal_Test:
         else False
         )
 
+        print(list(self.treatments))
+
         for outcome in self.outcomes:
-            for treatment in self.treatments:
+            for treatment in list(self.treatments):
                 print(f"Analyzing causal effect of {treatment} on {outcome}",flush= True)
                 
                 # Create a causal model
                 model = CausalModel(
                     data=self.data,
-                    treatment=self.treatment,
-                    outcome=self.outcome,
+                    treatment=treatment,
+                    outcome=outcome,
                     common_causes=self.confounders
                 )
                 
@@ -70,7 +86,7 @@ class Causal_Test:
                 )
                 print("Refutation Result:", refutation, flush= True)
 
-                res = check_threshold(estimate, refutation, 50)
+                res = check_threshold(estimate.value, refutation.new_effect, 50)
                 if res == True: return False
 
         return True
