@@ -3,6 +3,16 @@ import evaluate
 
 class Metrics:
     '''
+
+    Description : Returns a custom metric object that takes in lists of prompts and evaluates them by returning a
+     score with the user specified metric Ex : 'toxicity' , 'regard' , 'honest' etc
+
+    Arguments:
+        1. scores : (list[str]) : list of metric names that is intended to evaluate model respones during inference
+
+    Methods:
+        Methods here are the list of evaluate using  funcions (ex cal_regard calculates the regard scores for all the mdoel respones)
+
     '''
     def __init__(self, scores = ['toxicity']):
         self.scores = scores
