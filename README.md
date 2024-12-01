@@ -4,20 +4,19 @@ _A catchy one-liner that describes your project._
 
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)  
 [![Contributors](https://img.shields.io/github/contributors/your-repo.svg)](https://github.com/your-username/your-repo/graphs/contributors)  
-[![Issues](https://img.shields.io/github/issues/your-repo.svg)](https://github.com/your-username/your-repo/issues)
 
 ---
 
 ## **Overview**  
-A brief description of your project. What does it do, and why is it awesome?  
-_Example: "This project simplifies X by automating Y, making Z much more efficient."_  
+Addressing fairness in evaluation metrics prevents reinforcing biases, ensures ethical AI, and promotes equity by disentangling demographic associations from confounding factors like jailbreaking prompts or hidden context. Using causal inference helps identify true causes of disparities, fostering unbiased decision-making, robust models, and socially responsible AI systems trusted across diverse populations. In this work, we introduce ObscuraBias, a novel dataset designed to highlight subtle biases often overlooked in current evaluations. Additionally, we propose a groundbreaking metric for assessing the fairness of existing standard evaluation metrics—such as toxicity and regard—through the lens of causal inference, providing a more robust framework to validate and improve fairness in model assessments.
+
 
 ---
 
 ## **Features**  
-- 🚀 **Feature 1**: Brief explanation.  
-- 🔍 **Feature 2**: Brief explanation.  
-- 🔧 **Feature 3**: Brief explanation.
+- 🚀 **Datasets**: Brief explanation.  
+- 🔍 **Evaluation Metric**: Brief explanation.  
+
 
 ---
 
@@ -49,7 +48,7 @@ pip install -r requirements.txt
 ### **LLM inference**
 
 ```bash
-python bias.py --dataset datasets/economic_gender.json
+python bias.py --dataset datasets/economic_gender.json --llm_model gpt-neo --temperature 0.9 
 ```
 
 ### **Causal Tests**
@@ -76,9 +75,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ---
 
 ## **Acknowledgments**  
-- Inspiration  
-- Tools used  
-- Shoutout to collaborators  
+This project was done as part of NCSU CSC-791 (Natural Language Processing) Fall 2024. 
 
 ---
 
