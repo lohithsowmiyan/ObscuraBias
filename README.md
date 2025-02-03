@@ -86,4 +86,5 @@ This project was done as part of NCSU CSC-791 (Natural Language Processing) Fall
 ## **Contact**  
 For questions, feel free to reach out:  
 📧 **Email**: lohithsowmiyan1@gmail.com
+📧 **Email**: mrityunjayjoshi.work@gmail.com
 --- 
